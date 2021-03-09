@@ -33,6 +33,10 @@ const displayTop100Table = function(tickers) {
     }
 }
 
+var getTrendingTickers = {
+    
+}
+
 // TODO Api calls to get stock data
 // TODO Display stock ticker
 // TODO Handle stock symbol search form
