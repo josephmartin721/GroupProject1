@@ -40,6 +40,24 @@ const displayTop100Table = function(tickers) {
 // TODO Response error handling
 const getTrendingTickers = function(query, callback) {
     const url = `https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-trending-tickers?region=US`;
+<<<<<<< HEAD
+=======
+
+    fetch(url, {
+        headers: {
+            'x-rapidapi-key': RAPID_API_KEY,
+	        'x-rapidapi-host': RAPID_API_HOST,
+	        'useQueryString': true
+        }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error));
+}
+
+// TODO Display scrolling stock ticker
+// TODO Handle stock symbol search form
+>>>>>>> f6e04936ac6dee2e91cccfcac18caa465e9b502b
 
     fetch(url, {
         headers: {
