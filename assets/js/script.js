@@ -41,7 +41,10 @@ const displayTop100Table = function(tickers) {
 const getTrendingTickers = function(query, callback) {
     const url = `https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-trending-tickers?region=US`;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> f6e04936ac6dee2e91cccfcac18caa465e9b502b
 
     fetch(url, {
         headers: {
