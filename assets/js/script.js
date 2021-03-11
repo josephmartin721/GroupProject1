@@ -39,12 +39,7 @@ const displayTop100Table = function(tickers) {
 // API call to get trending stock tickers
 // TODO Response error handling
 const getTrendingTickers = function(query, callback) {
-    const url = `https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-trending-tickers?region=US`;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> f6e04936ac6dee2e91cccfcac18caa465e9b502b
+    const url = `https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-trending-tickers?region=US`;z
 
     fetch(url, {
         headers: {
@@ -60,35 +55,3 @@ const getTrendingTickers = function(query, callback) {
 
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
->>>>>>> f6e04936ac6dee2e91cccfcac18caa465e9b502b
-
-<<<<<<< HEAD
-    fetch(url, {
-        headers: {
-            'x-rapidapi-key': RAPID_API_KEY,
-	        'x-rapidapi-host': RAPID_API_HOST,
-	        'useQueryString': true
-        }
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
-}
-=======
-var symSearch = $('#input').val()
-var symSearch = 'AAPL'
-
-const searchSymbol = function(symbol) {
-    
-fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbol, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": RAPID_API_KEY,
-		"x-rapidapi-host": RAPID_API_HOST
-   }})
-   .then(response => response.json())
-   .then(data => console.log(data))
-   .catch(err => console.log(err))
-}
-searchSymbol ('AAPL')
->>>>>>> main
