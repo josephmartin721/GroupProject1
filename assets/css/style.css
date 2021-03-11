@@ -2,6 +2,10 @@ body {
   background-color: cadetblue;
 }
 
+h1 {
+  font-size: 40px;
+}
+
 .dataRaw {
   font-family: 'Volkhov', serif;
   text-align: center;
@@ -10,28 +14,19 @@ body {
   margin: 0 auto;
 }
 
-.marquee {
+marquee {
   font-family: 'Volkhov', serif;
-  font-size: large ;
+  font-size: 20px;
   margin: 0 auto;
   white-space: nowrap;
   overflow: hidden;
 }
 
-
-/* KEEPING THIS PSEUDO CODE AS A BACKUP
-
-.marquee span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: marquee 5s linear infinite;
+button {
+  border-color: eaab00;
+  border-style: double;
+  border-width: 3px;
 }
-
-@keyframes marquee {
-    0%   { transform: translate(0%, 0); }
-    100% { transform: translate(-100%, 0); }
-}
-/
 
 /* break css indicates spacing placement */
 .break1 {
