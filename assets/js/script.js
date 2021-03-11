@@ -103,10 +103,7 @@ const getAvailablePlatforms = function(symbol, callback) {
     .catch(function(err) {
         console.log(err);
         callback(platforms);
-    });
-
-    
-    
+    });   
 }
 
 
