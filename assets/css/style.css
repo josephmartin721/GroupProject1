@@ -1,3 +1,144 @@
-(h1)
+body {
+  background-color: cadetblue;
+}
 
-(div)
+h1 {
+  font-size: 40px;
+  text-decoration-line: underline;
+}
+
+.dataRaw {
+  font-family: 'Volkhov', serif;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: underline;
+  vertical-align: middle;
+  line-height: normal;
+  margin: 0 auto;
+}
+
+marquee {
+  font-family: 'Volkhov', serif;
+  font-size: 20px;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+text {
+  border-color: eaab00;
+  border-style: double;
+  border-width: 3px;
+}
+
+button {
+  border-color: eaab00;
+  border-style: double;
+  border-width: 3px;
+}
+
+/* break css indicates spacing placement */
+.break1 {
+  margin-top: 50px;
+}
+
+.break2 {
+  margin-top: 100px;
+}
+
+.break3 {
+  margin-top: 350px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  font-family: 'Volkhov', serif;
+}
+
+.pure-menu-custom-restricted-width {
+  background-color: rgb(0, 153, 255);
+  border-color: #eaab00;
+  border-style: groove;
+  width: fit-content;
+  font-family: 'Volkhov', serif;
+  margin: 0 auto;
+  align-items: left;
+}
+
+.pure-menu-heading {
+  color: black;
+  font-family: 'Volkhov', serif;
+}
+
+.pure-menu-link {
+  color: black;
+}
+
+/* header and footer animations*/
+.box1
+{
+  font-family: 'Volkhov', serif;
+  width: inherit;
+  margin: 0 auto;
+  padding: 8px;
+  background-color: #eaab00;
+  background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),  url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
+  url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
+  background-repeat:no-repeat;
+  background-size: 0 4px, 0 100%, 0% 2px;
+  background-position: top;
+  -webkit-animation: drawBorderFromCenter 5s infinite;
+}
+
+.content1
+{
+  background: rgb(0, 153, 255);;
+  padding: 1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.box2
+{
+  font-family: 'Volkhov', serif;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: normal;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  background-color: #eaab00;
+  background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),  url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
+  url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
+  background-repeat:no-repeat;
+  background-size: 0 4px, 0 100%, 0% 2px;
+  background-position: bottom;
+  -webkit-animation: drawBorderFromCenter 5s infinite;
+}
+
+.content2
+{
+  background: rgb(0, 153, 255);;
+  padding: 2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@-webkit-keyframes drawBorderFromCenter {
+    0% {
+      background-size: 0 2px, 0 0, 100% 100%;
+    }
+    20% {
+      background-size: 100% 2px, 100% 0, 100% 100%;
+    }
+    66%
+    {
+      background-size: 100% 2px, 100% 98%, 100% 100%;
+    }
+    99%
+    {
+      background-size: 100% 2px, 100% 98%, 0 2px;
+    }
+}
