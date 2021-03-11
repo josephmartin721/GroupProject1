@@ -71,7 +71,7 @@ fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?regi
    .then(data => console.log(data))
    .catch(err => console.log(err))
 }
-searchSymbol ('AAPL')
+searchSymbol ($('input[name="search"]'))
 
 function validateSubmit() {
     var x = $('input[name="search"]');
