@@ -72,3 +72,11 @@ fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?regi
    .catch(err => console.log(err))
 }
 searchSymbol ('AAPL')
+
+function validateSubmit() {
+    var x = $('input[name="search"]');
+    if (x == "") {
+      alert("Enter Ticker Symbol");
+      return false;
+    }
+  }
