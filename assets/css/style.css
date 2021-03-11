@@ -12,10 +12,14 @@ body {
 
 .marquee {
   font-family: 'Volkhov', serif;
+  font-size: large ;
   margin: 0 auto;
   white-space: nowrap;
   overflow: hidden;
 }
+
+
+/* KEEPING THIS PSEUDO CODE AS A BACKUP
 
 .marquee span {
   display: inline-block;
@@ -24,9 +28,11 @@ body {
 }
 
 @keyframes marquee {
-    0%   { transform: translate(0, 0); }
+    0%   { transform: translate(0%, 0); }
     100% { transform: translate(-100%, 0); }
 }
+/
+
 /* break css indicates spacing placement */
 .break1 {
   margin-top: 50px;
@@ -40,8 +46,12 @@ body {
   margin-top: 350px;
 }
 
+table, th, td {
+  border: 1px solid black;
+}
+
 .pure-menu-custom-restricted-width {
-  background-color: blue;
+  background-color: rgb(0, 153, 255);
   border-color: #eaab00;
   border-style: groove;
   width: fit-content;
@@ -77,7 +87,7 @@ body {
 
 .content1
 {
-  background: blue;
+  background: rgb(0, 153, 255);;
   padding: 1em;
   text-align: center;
   text-transform: uppercase;
@@ -105,7 +115,7 @@ body {
 
 .content2
 {
-  background: blue;
+  background: rgb(0, 153, 255);;
   padding: 2em;
   text-align: center;
   text-transform: uppercase;
