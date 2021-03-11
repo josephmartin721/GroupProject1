@@ -1,5 +1,5 @@
 body {
-  background-color: cadetblue;
+  background-color: rgb(97, 207, 211);
 }
 
 h1 {
@@ -55,25 +55,6 @@ table, th, td {
   font-family: 'Volkhov', serif;
 }
 
-.pure-menu-custom-restricted-width {
-  background-color: rgb(0, 153, 255);
-  border-color: #eaab00;
-  border-style: groove;
-  width: fit-content;
-  font-family: 'Volkhov', serif;
-  margin: 0 auto;
-  align-items: left;
-}
-
-.pure-menu-heading {
-  color: black;
-  font-family: 'Volkhov', serif;
-}
-
-.pure-menu-link {
-  color: black;
-}
-
 /* header and footer animations*/
 .box1
 {
@@ -98,17 +79,41 @@ table, th, td {
   text-transform: uppercase;
 }
 
+.dropdown {
+  border: solid #eaab00;
+  font-family: 'Volkhov', serif;
+  position:inherit;
+  display: inline-block;
+}
+
+.dropdown-content {
+  font-family: 'Volkhov', serif;
+  display: none;
+  position: absolute;
+  background-color: #eaab00;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 .box2
 {
   font-family: 'Volkhov', serif;
+  font-size: 20px;
   padding: 8px;
   text-align: center;
+  text-decoration: overline underline #eaab00;
   vertical-align: middle;
   line-height: normal;
   margin: 0 auto;
   position: fixed;
   bottom: 0px;
-  width: 100%;
+  width: 99.1%;
   background-color: #eaab00;
   background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),  url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
   url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
