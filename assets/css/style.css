@@ -4,11 +4,14 @@ body {
 
 h1 {
   font-size: 40px;
+  text-decoration-line: underline;
 }
 
 .dataRaw {
   font-family: 'Volkhov', serif;
+  font-size: 20px;
   text-align: center;
+  text-decoration: underline;
   vertical-align: middle;
   line-height: normal;
   margin: 0 auto;
@@ -20,6 +23,12 @@ marquee {
   margin: 0 auto;
   white-space: nowrap;
   overflow: hidden;
+}
+
+text {
+  border-color: eaab00;
+  border-style: double;
+  border-width: 3px;
 }
 
 button {
@@ -43,6 +52,7 @@ button {
 
 table, th, td {
   border: 1px solid black;
+  font-family: 'Volkhov', serif;
 }
 
 .pure-menu-custom-restricted-width {
