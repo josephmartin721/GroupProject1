@@ -56,20 +56,19 @@ const getTrendingTickers = function(query, callback) {
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
 
-//var symSearch = $('#input').val()
-//var symSearch = 'AAPL'
+var symSearch = $('#input').val()
+var symSearch = 'AAPL'
 
-//function searchSym() {}
-//fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symSearch , {
-	//"method": "GET",
-	//"headers": {
-		//"x-rapidapi-key": "915ac9e49amsh7a61f8b607aa463p1ff88ejsn3c2fd7c0d02d",
-		//"x-rapidapi-host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
-   // }
-    //.then(response => {
-        //console.log(response);
-   // })
-   // .catch(err => {
-    //    console.error(err);
-   // })
-//})
+const searchSymbol = function(symbol) {
+    
+fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbol, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": RAPID_API_KEY,
+		"x-rapidapi-host": RAPID_API_HOST
+   }})
+   .then(response => response.json())
+   .then(data => console.log(data))
+   .catch(err => console.log(err))
+}
+searchSymbol ('AAPL')
