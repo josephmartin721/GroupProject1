@@ -110,8 +110,7 @@ const getQuotes = function(symbols, callback) {
        .catch(err => console.log(err));
 
     }
-
-
+    
 // Fidelity is returning xml data!
 const getAvailablePlatforms = function(symbol, callback) {
     let platforms = [];
