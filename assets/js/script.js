@@ -1,7 +1,22 @@
 const RAPID_API_KEY = 'f577c81c30msh97c9a74f04d0771p1126bejsnd343a5c3de13';
-const RAPID_API_HOST = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
+const RAPID_API_YAHOO_HOST = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
+const RAPID_API_FIDELITY_HOST = 'fidelity-investments.p.rapidapi.com';
 const top100TableBodyEl = $('#top100-tbody');
+const symSearch = $('#input').val();
+const fidelity = {
+        name: 'Fidelity Investments',
+        url: 'https://www.fidelity.com/'
+    }
 
+Array.prototype.toSymbolsString = function() {
+	result = '';
+	for (var i = 0; i < this.length - 1; i++) {
+  	result += this[i];
+    result += '%2C';
+  }
+  result += this[this.length - 1];
+  return result;
+}
 // For testing purposes
 const tickers = [
     {
@@ -45,19 +60,16 @@ const getTrendingTickers = function(query, callback) {
         headers: {
             'x-rapidapi-key': RAPID_API_KEY,
 	        'x-rapidapi-host': RAPID_API_HOST,
-	        'useQueryString': true
         }
     })
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
+
 }
 
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
-
-var symSearch = $('#input').val()
-var symSearch = 'AAPL'
 
 const searchSymbol = function(symbol) {
     
@@ -65,10 +77,67 @@ fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?regi
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-key": RAPID_API_KEY,
-		"x-rapidapi-host": RAPID_API_HOST
+		"x-rapidapi-host": RAPID_API_YAHOO_HOST
    }})
    .then(response => response.json())
    .then(data => console.log(data))
    .catch(err => console.log(err))
 }
-searchSymbol ('AAPL')
+
+searchSymbol ($('input[name="search"]'))
+
+function validateSubmit() {
+    var x = $('input[name="search"]');
+    if (x == "") {
+      alert("Enter Ticker Symbol");
+      return false;
+    }
+}
+
+const getQuotes = function(symbols, callback) {
+    let symbolsStr = symbols.toSymbolsString();
+    
+    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolStr, {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-key": RAPID_API_KEY,
+            "x-rapidapi-host": RAPID_API_YAHOO_HOST
+       }})
+       .then(response => response.json())
+       .then(data => callback(data))
+       .catch(err => console.log(err));
+
+    }
+
+
+// Fidelity is returning xml data!
+const getAvailablePlatforms = function(symbol, callback) {
+    let platforms = [];
+
+    const url = `https://fidelity-investments.p.rapidapi.com/quotes/get-details?symbols=${symbol}`
+
+    fetch(url, {
+        headers: {
+            'x-rapidapi-key': RAPID_API_KEY,
+            'x-rapidapi-host': RAPID_API_FIDELITY_HOST,
+        }
+    })
+    .then(response => response.text())
+    .then(function(data) {
+        console.log(data);
+        const parser = new DOMParser();
+        // Parses xml string into DOM tree
+        const $dom = $(parser.parseFromString(data, 'application/xml'));
+
+        if ($dom.find('STATUS').find('ERROR_CODE').text() === '0') {
+            platforms.push(fidelity);
+        }
+
+        callback(platforms);
+    })
+    .catch(function(err) {
+        console.log(err);
+        callback(platforms);
+    });   
+}
+
