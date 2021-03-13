@@ -1,8 +1,8 @@
 const RAPID_API_KEY = 'f577c81c30msh97c9a74f04d0771p1126bejsnd343a5c3de13';
 const RAPID_API_YAHOO_HOST = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
 const RAPID_API_FIDELITY_HOST = 'fidelity-investments.p.rapidapi.com';
-const top100TableBodyEl = $('#top100-tbody');
-const symSearch = $('#input').val();
+const mainTableBodyEl = $('#main-tbody');
+const searchInputEl = $('#search');
 const fidelity = {
         name: 'Fidelity Investments',
         url: 'https://www.fidelity.com/'
@@ -35,22 +35,6 @@ const tickers = [
         askprice: 2071
     }
 ]
-
-const displayTop100Table = function(tickers) {
-    for (var i = 0; i < tickers.length; i++) {
-        let stock = tickers[i];
-
-        top100TableBodyEl.append(`
-            <tr>
-                <td>${stock.name}</td>
-                <td>${stock.ticker}</td>
-                <td>&#36;${stock.askprice}</td>
-                <td>Available Platforms</td>
-            </tr>
-        `);
-    }
-}
-
 // API call to get trending stock tickers
 // TODO Response error handling
 const getTrendingTickers = function(query, callback) {
@@ -68,25 +52,50 @@ const getTrendingTickers = function(query, callback) {
 
 }
 
-// TODO Display scrolling stock ticker
-// TODO Handle stock symbol search form
-
-const searchSymbol = function(symbol) {
+// Returns an array of the most active stocks
+const getMostActives = function(callback) {
+    const url = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers?region=US&lang=en-US&start=0&count=6';
     
-fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbol, {
+    fetch(url, {
 	"method": "GET",
 	"headers": {
 		"x-rapidapi-key": RAPID_API_KEY,
 		"x-rapidapi-host": RAPID_API_YAHOO_HOST
-   }})
-   .then(response => response.json())
-   .then(data => console.log(data))
-   .catch(err => console.log(err))
+	}
+})
+.then(response => response.json())
+.then(function(data){
+    console.log(data);
+    callback(data.finance.result[2].quotes);
+})
+.catch(err => console.error(err));
+
+}
+
+// Callsback an array of the stock quotes objects ordered in descending order by price percent change greater than 3% with respect to the previous close
+const getDayGainers = function(callback) {
+    const url = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers?region=US&lang=en-US&start=0&count=6';
+    
+    fetch(url, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": RAPID_API_KEY,
+		"x-rapidapi-host": RAPID_API_YAHOO_HOST
+	}
+})
+.then(response => response.json())
+.then(function(data){
+    callback(data.finance.result[0].quotes);
+})
+.catch(err => console.error(err));
+
 }
 $('#search-button').click(searchSymbol ($('#search').val()))
 
 
 
+// TODO Display scrolling stock ticker
+// TODO Handle stock symbol search form
 
 function validateSubmit() {
     var x = $('#search').val();
@@ -98,7 +107,7 @@ function validateSubmit() {
 
 const getQuotes = function(symbols, callback) {
     let symbolsStr = symbols.toSymbolsString();
-    
+    console.log(symbolsStr);
     fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolsStr, {
         "method": "GET",
         "headers": {
@@ -109,9 +118,10 @@ const getQuotes = function(symbols, callback) {
        .then(data => callback(data))
        .catch(err => console.log(err));
 
-    }
-    
-// Fidelity is returning xml data!
+}
+
+
+// Returns the fidelity object if there is not an error for the api call. Needs refactoring to add other platforms. 
 const getAvailablePlatforms = function(symbol, callback) {
     let platforms = [];
 
@@ -139,6 +149,61 @@ const getAvailablePlatforms = function(symbol, callback) {
     .catch(function(err) {
         console.log(err);
         callback(platforms);
+    });   
+}
+
+const displayMainTableBody = function() {
+
+    getDayGainers(function(quotes) {
+        let symbols = [];
+        // Loops through the quotes object and pushes the stock symbol to the symbols array.    
+        for (var i = 0; i < quotes.length; i++) {
+            symbols.push(quotes[i].symbol);
+        }
+        
+        getQuotes(symbols, function(quotesData) {
+            let quotes = quotesData.quoteResponse.result;
+            // loop through quotes and get available platforms
+            for (var i = 0; i < quotes.length; i++) {
+                let quote = quotes[i];
+                console.log(quote);
+                mainTableBodyEl.append(`
+                <tr>
+                    <td>${quote.longName}</td>
+                    <td>${quote.symbol}</td>
+                    <td>&#36;${quote.ask}</td>
+                    <td>Available Platforms</td>
+                </tr>
+            `);
+            }
+            
+        });
+    });   
+}
+
+const displaySearchResults = function() {
+    mainTableBodyEl.empty();
+
+    let parseMatch = /\s|,/
+    // Splits search inputs on spaces or commas
+    let symbols = searchInputEl.val().split(parseMatch);
+    console.log(symbols);
+    getQuotes(symbols, function(quotesData) {
+        let quotes = quotesData.quoteResponse.result;
+        
+        for (var i = 0; i < quotes.length; i++) {
+            let quote = quotes[i];
+            console.log(quote);
+            mainTableBodyEl.append(`
+            <tr>
+                <td>${quote.longName}</td>
+                <td>${quote.symbol}</td>
+                <td>&#36;${quote.ask}</td>
+                <td>Available Platforms</td>
+            </tr>
+        `);
+        }
+        
     });   
 }
 
