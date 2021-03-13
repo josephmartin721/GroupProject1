@@ -1,7 +1,7 @@
 const RAPID_API_KEY = 'f577c81c30msh97c9a74f04d0771p1126bejsnd343a5c3de13';
 const RAPID_API_YAHOO_HOST = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
 const RAPID_API_FIDELITY_HOST = 'fidelity-investments.p.rapidapi.com';
-const top100TableBodyEl = $('#top100-tbody');
+const mainTableBodyEl = $('#main-tbody');
 const symSearch = $('#input').val();
 const fidelity = {
         name: 'Fidelity Investments',
@@ -26,20 +26,36 @@ const tickers = [
         askprice: 2071
     }
 ]
-
-const displayTop100Table = function(tickers) {
-    for (var i = 0; i < tickers.length; i++) {
-        let stock = tickers[i];
-
-        top100TableBodyEl.append(`
-            <tr>
-                <td>${stock.name}</td>
-                <td>${stock.ticker}</td>
-                <td>&#36;${stock.askprice}</td>
-                <td>Available Platforms</td>
-            </tr>
-        `);
+// TODO 
+const displayMainTable = function(quotes) {
+    // get list of symbols
+    let symbols = [];
+    // Loop through quotes object and push symbol to symbols array
+    for (var i = 0; i < quotes.length; i++) {
+        symbols.push(quotes[i].symbol);
     }
+    let quotes = [];
+    // get quotes for all symbols
+    getQuotes(symbols, function(data) {
+        console.log(data);
+        // loop through quotes and get available platforms
+    for (var i = 0; i < quotes.length; i++) {
+        let quote = quotes[i];
+
+        // getSymbol(quote.symbol, function(data) {
+        //     symbol = 
+        // })
+
+            mainTableBodyEl.append(`
+                <tr>
+                    <td>${stock.name}</td>
+                    <td>${stock.ticker}</td>
+                    <td>&#36;${stock.askprice}</td>
+                    <td>Available Platforms</td>
+                </tr>
+            `);
+        }
+    });
 }
 
 // API call to get trending stock tickers
@@ -58,10 +74,50 @@ const getTrendingTickers = function(query, callback) {
     .catch(error => console.log(error));
 }
 
+// Returns an array of the most active stocks
+const getMostActives = function(callback) {
+    const url = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers?region=US&lang=en-US&start=0&count=6';
+    
+    fetch(url, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": RAPID_API_KEY,
+		"x-rapidapi-host": RAPID_API_YAHOO_HOST
+	}
+})
+.then(response => response.json())
+.then(function(data){
+    console.log(data);
+    callback(data.finance.result[2].quotes);
+})
+.catch(err => console.error(err));
+
+}
+
+// Returns an array of the stocks ordered in descending order by price percent change greater than 3% with respect to the previous close
+const getDayGainers = function(callback) {
+    const url = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers?region=US&lang=en-US&start=0&count=6';
+    
+    fetch(url, {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": RAPID_API_KEY,
+		"x-rapidapi-host": RAPID_API_YAHOO_HOST
+	}
+})
+.then(response => response.json())
+.then(function(data){
+    console.log(data);
+    callback(data.finance.result[0].quotes);
+})
+.catch(err => console.error(err));
+
+}
+
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
 
-const searchSymbol = function(symbol) {
+const getQuotes = function(symbol, callback) {
     
 fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbol, {
 	"method": "GET",
@@ -70,12 +126,12 @@ fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?regi
 		"x-rapidapi-host": RAPID_API_YAHOO_HOST
    }})
    .then(response => response.json())
-   .then(data => console.log(data))
+   .then(data => callback(data))
    .catch(err => console.log(err))
 }
 
 
-// Fidelity is returning xml data!
+// Returns the fidelity object if there is not an error for the api call. Needs refactoring to add other platforms. 
 const getAvailablePlatforms = function(symbol, callback) {
     let platforms = [];
 
