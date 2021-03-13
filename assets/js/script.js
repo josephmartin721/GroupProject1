@@ -8,6 +8,15 @@ const fidelity = {
         url: 'https://www.fidelity.com/'
     }
 
+Array.prototype.toSymbolsString = function() {
+	result = '';
+	for (var i = 0; i < this.length - 1; i++) {
+  	result += this[i];
+    result += '%2C';
+  }
+  result += this[this.length - 1];
+  return result;
+}
 // For testing purposes
 const tickers = [
     {
@@ -72,6 +81,7 @@ const getTrendingTickers = function(query, callback) {
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
+
 }
 
 // Returns an array of the most active stocks
@@ -130,6 +140,31 @@ fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?regi
    .catch(err => console.log(err))
 }
 
+searchSymbol ($('input[name="search"]'))
+
+function validateSubmit() {
+    var x = $('input[name="search"]');
+    if (x == "") {
+      alert("Enter Ticker Symbol");
+      return false;
+    }
+}
+
+const getQuotes = function(symbols, callback) {
+    let symbolsStr = symbols.toSymbolsString();
+    
+    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolStr, {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-key": RAPID_API_KEY,
+            "x-rapidapi-host": RAPID_API_YAHOO_HOST
+       }})
+       .then(response => response.json())
+       .then(data => callback(data))
+       .catch(err => console.log(err));
+
+    }
+
 
 // Returns the fidelity object if there is not an error for the api call. Needs refactoring to add other platforms. 
 const getAvailablePlatforms = function(symbol, callback) {
@@ -161,5 +196,4 @@ const getAvailablePlatforms = function(symbol, callback) {
         callback(platforms);
     });   
 }
-
 
