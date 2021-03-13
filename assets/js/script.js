@@ -2,6 +2,15 @@ const RAPID_API_KEY = 'f577c81c30msh97c9a74f04d0771p1126bejsnd343a5c3de13';
 const RAPID_API_HOST = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
 const top100TableBodyEl = $('#top100-tbody');
 
+Array.prototype.toSymbolsString = function() {
+	result = '';
+	for (var i = 0; i < this.length - 1; i++) {
+  	result += this[i];
+    result += '%2C';
+  }
+  result += this[this.length - 1];
+  return result;
+}
 // For testing purposes
 const tickers = [
     {
@@ -51,6 +60,7 @@ const getTrendingTickers = function(query, callback) {
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
+
 }
 
 // TODO Display scrolling stock ticker
@@ -81,19 +91,17 @@ function validateSubmit() {
     }
 }
 
-const getGainers = function () {
-    var gainersArray = ''
-    const searchSymbol = function(gainersArray) {
+const getQuotes = function(symbols, callback) {
+    let symbolsStr = symbols.toSymbolsString();
     
-        fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + gainersArray, {
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-key": RAPID_API_KEY,
-                "x-rapidapi-host": RAPID_API_HOST
-           }})
-           .then(response => response.json())
-           .then(data => console.log(data))
-           .catch(err => console.log(err))
+    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolStr, {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-key": RAPID_API_KEY,
+            "x-rapidapi-host": RAPID_API_YAHOO_HOST
+       }})
+       .then(response => response.json())
+       .then(data => callback(data))
+       .catch(err => console.log(err));
+
     }
-    searchSymbol ()
-}
