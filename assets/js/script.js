@@ -82,12 +82,15 @@ const getDayGainers = function(callback) {
     .catch(err => console.error(err));
 
 }
+$('#search-button').click(searchSymbol ($('#search').val()))
+
+
 
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
 
 function validateSubmit() {
-    var x = $('input[name="search"]');
+    var x = $('#search').val();
     if (x == "") {
       alert("Enter Ticker Symbol");
       return false;
