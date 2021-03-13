@@ -2,7 +2,7 @@ const RAPID_API_KEY = 'f577c81c30msh97c9a74f04d0771p1126bejsnd343a5c3de13';
 const RAPID_API_YAHOO_HOST = 'apidojo-yahoo-finance-v1.p.rapidapi.com';
 const RAPID_API_FIDELITY_HOST = 'fidelity-investments.p.rapidapi.com';
 const mainTableBodyEl = $('#main-tbody');
-const symSearch = $('#input').val();
+const searchInputEl = $('#search');
 const fidelity = {
         name: 'Fidelity Investments',
         url: 'https://www.fidelity.com/'
@@ -175,7 +175,32 @@ const displayMainTableBody = function() {
             }
             
         });
-    });
-    
+    });   
+}
+
+const displaySearchResults = function() {
+    mainTableBodyEl.empty();
+
+    let parseMatch = /\s|,/
+    // Splits search inputs on spaces or commas
+    let symbols = searchInputEl.val().split(parseMatch);
+    console.log(symbols);
+    getQuotes(symbols, function(quotesData) {
+        let quotes = quotesData.quoteResponse.result;
+        
+        for (var i = 0; i < quotes.length; i++) {
+            let quote = quotes[i];
+            console.log(quote);
+            mainTableBodyEl.append(`
+            <tr>
+                <td>${quote.longName}</td>
+                <td>${quote.symbol}</td>
+                <td>&#36;${quote.ask}</td>
+                <td>Available Platforms</td>
+            </tr>
+        `);
+        }
+        
+    });   
 }
 
