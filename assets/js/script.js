@@ -35,38 +35,6 @@ const tickers = [
         askprice: 2071
     }
 ]
-// TODO 
-const displayMainTable = function(quotes) {
-    // get list of symbols
-    let symbols = [];
-    // Loop through quotes object and push symbol to symbols array
-    for (var i = 0; i < quotes.length; i++) {
-        symbols.push(quotes[i].symbol);
-    }
-    let quotes = [];
-    // get quotes for all symbols
-    getQuotes(symbols, function(data) {
-        console.log(data);
-        // loop through quotes and get available platforms
-    for (var i = 0; i < quotes.length; i++) {
-        let quote = quotes[i];
-
-        // getSymbol(quote.symbol, function(data) {
-        //     symbol = 
-        // })
-
-            mainTableBodyEl.append(`
-                <tr>
-                    <td>${stock.name}</td>
-                    <td>${stock.ticker}</td>
-                    <td>&#36;${stock.askprice}</td>
-                    <td>Available Platforms</td>
-                </tr>
-            `);
-        }
-    });
-}
-
 // API call to get trending stock tickers
 // TODO Response error handling
 const getTrendingTickers = function(query, callback) {
@@ -104,7 +72,7 @@ const getMostActives = function(callback) {
 
 }
 
-// Returns an array of the stocks ordered in descending order by price percent change greater than 3% with respect to the previous close
+// Callsback an array of the stock quotes objects ordered in descending order by price percent change greater than 3% with respect to the previous close
 const getDayGainers = function(callback) {
     const url = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-movers?region=US&lang=en-US&start=0&count=6';
     
@@ -117,7 +85,6 @@ const getDayGainers = function(callback) {
 })
 .then(response => response.json())
 .then(function(data){
-    console.log(data);
     callback(data.finance.result[0].quotes);
 })
 .catch(err => console.error(err));
@@ -126,21 +93,6 @@ const getDayGainers = function(callback) {
 
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
-
-const getQuotes = function(symbol, callback) {
-    
-fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbol, {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-key": RAPID_API_KEY,
-		"x-rapidapi-host": RAPID_API_YAHOO_HOST
-   }})
-   .then(response => response.json())
-   .then(data => callback(data))
-   .catch(err => console.log(err))
-}
-
-searchSymbol ($('input[name="search"]'))
 
 function validateSubmit() {
     var x = $('input[name="search"]');
@@ -152,8 +104,8 @@ function validateSubmit() {
 
 const getQuotes = function(symbols, callback) {
     let symbolsStr = symbols.toSymbolsString();
-    
-    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolStr, {
+    console.log(symbolsStr);
+    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolsStr, {
         "method": "GET",
         "headers": {
             "x-rapidapi-key": RAPID_API_KEY,
@@ -163,7 +115,7 @@ const getQuotes = function(symbols, callback) {
        .then(data => callback(data))
        .catch(err => console.log(err));
 
-    }
+}
 
 
 // Returns the fidelity object if there is not an error for the api call. Needs refactoring to add other platforms. 
@@ -195,5 +147,35 @@ const getAvailablePlatforms = function(symbol, callback) {
         console.log(err);
         callback(platforms);
     });   
+}
+
+const displayMainTableBody = function() {
+
+    getDayGainers(function(quotes) {
+        let symbols = [];
+        // Loops through the quotes object and pushes the stock symbol to the symbols array.    
+        for (var i = 0; i < quotes.length; i++) {
+            symbols.push(quotes[i].symbol);
+        }
+        
+        getQuotes(symbols, function(quotesData) {
+            let quotes = quotesData.quoteResponse.result;
+            // loop through quotes and get available platforms
+            for (var i = 0; i < quotes.length; i++) {
+                let quote = quotes[i];
+                console.log(quote);
+                mainTableBodyEl.append(`
+                <tr>
+                    <td>${quote.longName}</td>
+                    <td>${quote.symbol}</td>
+                    <td>&#36;${quote.ask}</td>
+                    <td>Available Platforms</td>
+                </tr>
+            `);
+            }
+            
+        });
+    });
+    
 }
 
