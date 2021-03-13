@@ -79,4 +79,21 @@ function validateSubmit() {
       alert("Enter Ticker Symbol");
       return false;
     }
-  }
+}
+
+const getGainers = function () {
+    var gainersArray = ''
+    const searchSymbol = function(gainersArray) {
+    
+        fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + gainersArray, {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": RAPID_API_KEY,
+                "x-rapidapi-host": RAPID_API_HOST
+           }})
+           .then(response => response.json())
+           .then(data => console.log(data))
+           .catch(err => console.log(err))
+    }
+    searchSymbol ()
+}
