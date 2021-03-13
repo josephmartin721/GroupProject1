@@ -97,7 +97,7 @@ function validateSubmit() {
 const getQuotes = function(symbols, callback) {
     let symbolsStr = symbols.toSymbolsString();
     
-    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolStr, {
+    fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=US&symbols=" + symbolsStr, {
         "method": "GET",
         "headers": {
             "x-rapidapi-key": RAPID_API_KEY,
