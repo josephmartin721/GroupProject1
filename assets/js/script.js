@@ -83,11 +83,13 @@ fetch("https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?regi
    .then(data => console.log(data))
    .catch(err => console.log(err))
 }
+$('#search-button').click(searchSymbol ($('#search').val()))
 
-searchSymbol ($('input[name="search"]'))
+
+
 
 function validateSubmit() {
-    var x = $('input[name="search"]');
+    var x = $('#search').val();
     if (x == "") {
       alert("Enter Ticker Symbol");
       return false;
