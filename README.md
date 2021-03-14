@@ -1,1 +1,1 @@
-# GroupProject1 (To be renamed)
+# Penny-Broker
