@@ -82,6 +82,12 @@ const getDayGainers = function(callback) {
     .catch(err => console.error(err));
 
 }
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> main
 
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
@@ -208,4 +214,5 @@ const displaySearchResults = function() {
     });   
 }
 
-$('#search-button').click(displaySearchResults)
+displayMainTableBody();
+$('#search-button').click(displaySearchResults);
