@@ -83,13 +83,17 @@ const getDayGainers = function(callback) {
 
 }
 
+
+
+
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
 
 function validateSubmit() {
     var x = $('#search').val();
     if (x == "") {
-      alert("Enter Ticker Symbol");
+        $("#search").html("Please enter symbol")
+        .addClass("error-msg");
       return false;
     }
 }
@@ -184,7 +188,6 @@ const displayMainTableBody = function() {
 
 const displaySearchResults = function() {
     mainTableBodyEl.empty();
-
     let parseMatch = /\s|,/
     // Splits search inputs on spaces or commas
     let symbols = searchInputEl.val().split(parseMatch);
@@ -209,4 +212,4 @@ const displaySearchResults = function() {
 }
 
 displayMainTableBody();
-
+$('#search-button').click(displaySearchResults);
