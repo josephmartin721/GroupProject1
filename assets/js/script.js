@@ -82,12 +82,6 @@ const getDayGainers = function(callback) {
     .catch(err => console.error(err));
 
 }
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> main
 
 // TODO Display scrolling stock ticker
 // TODO Handle stock symbol search form
