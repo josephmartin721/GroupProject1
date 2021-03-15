@@ -50,6 +50,12 @@ button {
   margin-top: 350px;
 }
 
+.searchList {
+  font-family: 'Volkhov', serif;
+  font-weight: bolder;
+}
+
+
 table, th, td {
   border: 1px solid black;
   font-family: 'Volkhov', serif;
